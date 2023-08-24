@@ -2,9 +2,19 @@ import Header from "./Header"
 import PetPage from "./PetPage"
 import {useState} from "react"
 
+
 function App() {
 
+
   const [searchText, setSearchText] = useState("")
+
+  const [formInputData, setFormInputData] = useState({
+    name: "",
+    image: ""
+  })
+
+  // const [newPetName, setPetNameInput] = useState("")
+  // const [petImageInput, setPetImageInput] = useState("")
 
   const [pets, setPets] = useState([
     {
@@ -57,10 +67,30 @@ function App() {
     }))
   }
 
+  // function updatePetNameInput(event){
+    // setPetNameInput(event.target.value)
+  // }
+
+  // function updatePetImageInput(event){
+    // setPetImageInput(event.target.value)
+  // }
+
+  function updateFormInputData(event){
+    setFormInputData({...formInputData, [event.target.name]: event.target.value})
+  }
+
+
+  function addPet(event){
+    event.preventDefault()
+    setPets([...pets, {id: pets[pets.length-1].id + 1, ...formInputData}])
+
+    }
+
+
   return (
     <div className="app">
       <Header />
-      <PetPage pets={filteredPets} setSearchText={setSearchText} adoptPet={adoptPet} />
+      <PetPage pets={filteredPets} setSearchText={setSearchText} adoptPet={adoptPet} formInputData={formInputData} updateFormInputData={updateFormInputData} addPet={addPet} />
     </div>
   );
 }
